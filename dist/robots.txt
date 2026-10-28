@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /404.html
 
-Sitemap: https://farvalle.edu.br/sitemap.xml
+Sitemap: https://nexusdigitalgrp-glitch.github.io/farvalle2/sitemap.xml

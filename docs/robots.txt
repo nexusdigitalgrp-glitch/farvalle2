@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+Sitemap: https://nexusdigitalgrp-glitch.github.io/farvalle2/sitemap.xml
