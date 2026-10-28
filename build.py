@@ -9,7 +9,8 @@ RAIZ = pathlib.Path(__file__).parent
 SRC = RAIZ / "src"
 DIST = RAIZ / "dist"
 LIMPO = "--limpo" in sys.argv
-V2 = "--v2" in sys.argv  # versão 2: formas geométricas da identidade (triângulos verde/laranja/creme)
+V3 = "--v3" in sys.argv  # versão 3: mistura do Farvalle 1 (layout aprovado 2026) com a v2
+V2 = "--v2" in sys.argv or V3  # versão 2: formas geométricas da identidade (triângulos verde/laranja/creme)
 BASE = next((a.split("=", 1)[1].rstrip("/") for a in sys.argv if a.startswith("--base=")), "")
 SITE = next((a.split("=", 1)[1].rstrip("/") for a in sys.argv if a.startswith("--site=")), "https://farvalle.edu.br")
 
@@ -349,9 +350,10 @@ def rodape():
       <p>{ic("mail")}<a href="mailto:{EMAIL}">{EMAIL}</a></p>
       <p>{ic("clock")}<span>{e(HORARIO)}</span></p>
     </div>
+    {'<div class="rodape-col rodape-acoes">' + btn("Portal do Aluno", PORTAL, "btn btn-claro", "portal", externo=True) + btn("Inscreva-se agora", url("inscreva-se"), "btn btn-laranja") + '<a class="rodape-qr" href="' + EMEC + '" target="_blank" rel="noopener"><img src="assets/img/qr-code-farvalle.svg" alt="QR code do cadastro e-MEC" width="370" height="370" loading="lazy"><span><img src="assets/img/e-mec.webp" alt="e-MEC" width="1024" height="362" loading="lazy">Consulte o cadastro da instituição no sistema e-MEC</span></a></div>' if V3 else ''}
   </div>
   <div class="wrap rodape-base">
-    <a class="rodape-emec" href="{EMEC}" target="_blank" rel="noopener"><img src="assets/img/e-mec.webp" alt="" width="1024" height="362" loading="lazy"><span>Consulte o cadastro da instituição no sistema e-MEC</span></a>
+    {'' if V3 else '<a class="rodape-emec" href="' + EMEC + '" target="_blank" rel="noopener"><img src="assets/img/e-mec.webp" alt="" width="1024" height="362" loading="lazy"><span>Consulte o cadastro da instituição no sistema e-MEC</span></a>'}
     <p>© {datetime.date.today().year} {NOME_LONGO}. Todos os direitos reservados.</p>
   </div>
 </footer>
@@ -428,9 +430,10 @@ def pagina(slug, titulo, descricao, corpo, og="assets/img/og.jpg", mapa=False):
 {'<link rel="stylesheet" href="assets/css/leaflet.css">' if mapa else ""}
 <link rel="stylesheet" href="assets/css/site.css?v={css_v}">
 {f'<link rel="stylesheet" href="assets/css/v2.css?v={versao_asset("assets/css/v2.css")}">' if V2 else ""}
+{f'<link rel="stylesheet" href="assets/css/v3.css?v={versao_asset("assets/css/v3.css")}">' if V3 else ""}
 {schema(slug, titulo, descricao)}
 </head>
-<body{' class="v2"' if V2 else ''}>
+<body{' class="v2 v3"' if V3 else (' class="v2"' if V2 else '')}>
 {cabecalho(slug)}
 <main id="conteudo">
 {corpo}
@@ -499,7 +502,7 @@ def card_curso(c, compacto=False):
 def cta_faixa(titulo="Seu futuro começa aqui.", texto="Dê o próximo passo com uma formação que transforma realidades e abre novos caminhos. Inscrições abertas para Enfermagem, Fisioterapia e Pedagogia.", foto_nome="cta"):
     return f'''<section class="cta-faixa">{decor("band")}
   <div class="wrap cta-faixa-in">
-    <div class="cta-faixa-foto">{foto(foto_nome, "Estudante da Farvalle", pos="center 25%")}</div>
+    <div class="cta-faixa-foto">{foto("hero-estudantes" if V3 else foto_nome, "Estudantes da Farvalle", pos="center 30%")}</div>
     <div class="cta-faixa-txt">
       <span class="eyebrow eyebrow-claro">{EDICAO}</span>
       <h2>{e(titulo)}</h2>
@@ -557,6 +560,7 @@ def home():
         <div class="btns">{btn(s["b1"][0], url(s["b1"][1]), "btn btn-laranja", grande=True)}{btn(s["b2"][0], url(s["b2"][1]), "btn btn-contorno", grande=True)}</div>
       </div>
       <div class="hero-foto-box">{decor("foto")}<div class="hero-foto">{foto(s["foto"], s["alt"], prioridade=(i == 0), pos=s["pos"])}</div></div>
+      {'<ul class="hero-palavras" aria-hidden="true">' + "".join(f"<li>{w}</li>" for w in ["Pessoas", "Formação", "Oportunidade", "Saúde", "Desenvolvimento", "Território", "Transformação"]) + '</ul>' if V3 else ''}
     </div>'''
     pontos = "".join(f'<button type="button" aria-label="Destaque {i+1}"{" aria-current=\"true\"" if i == 0 else ""}></button>' for i in range(len(slides)))
     hero = f'''<section class="hero" data-hero>{decor("soft")}
@@ -598,17 +602,14 @@ def home():
       </ul>
       <div class="btns">{btn("Conheça a Farvalle", url("a-farvalle"), "btn btn-verde")}</div>
     </div>
-    <div class="porque-fotos">
-      {foto("insc-cta", "Estudante da Farvalle", "porque-f1", pos="center 15%")}
-      {foto("news-3", "Estudantes conversando no campus", "porque-f2", pos="center 40%")}
-      <div class="porque-selo">{ic("shield")}<span><strong>Cadastrada no e-MEC</strong>Instituição de ensino superior reconhecida pelo MEC</span></div>
-    </div>
+    {'<div class="porque-arte">' + decor("foto") + '<div class="porque-arte-foto">' + foto("predio", "Campus da Farvalle no Valle Shopping", pos="center 55%") + '</div><div class="porque-selo">' + ic("shield") + '<span><strong>Cadastrada no e-MEC</strong>Instituição de ensino superior reconhecida pelo MEC</span></div></div>' if V3 else '<div class="porque-fotos">' + foto("insc-cta", "Estudante da Farvalle", "porque-f1", pos="center 15%") + foto("news-3", "Estudantes conversando no campus", "porque-f2", pos="center 40%") + '<div class="porque-selo">' + ic("shield") + '<span><strong>Cadastrada no e-MEC</strong>Instituição de ensino superior reconhecida pelo MEC</span></div></div>'}
   </div>
 </section>'''
 
-    numeros = f'''<section class="sec sec-numeros">{decor("soft")}
+    numeros = f'''<section class="sec sec-numeros">{decor("band" if V3 else "soft")}
   <div class="wrap">
-    {secao_titulo("Farvalle em números", "Mais pessoas, mais histórias,", acento="mais futuro.", centro=True)}
+    {secao_titulo("Farvalle em números", "Mais pessoas, mais histórias,", acento="mais futuro.", centro=not V3)}
+    {'<div class="numeros-foto">' + foto("cta", "Estudante da Farvalle", pos="center 20%") + '</div>' if V3 else ''}
     <div class="numeros" data-trilho>
       <div class="numero">{ic("grad","ic-circ")}<strong>3</strong><span>cursos de graduação presencial</span></div>
       <div class="numero">{ic("laptop","ic-circ")}<strong>4</strong><span>formas de ingresso, com vestibular online</span></div>
@@ -650,7 +651,7 @@ def home():
 
     campus = f'''<section class="sec sec-campus" id="campus">
   <div class="wrap campus-in">
-    <div class="campus-foto">{foto("predio", "Campus da Farvalle no Valle Shopping", pos="center 55%")}</div>
+    <div class="campus-foto">{foto("news-2" if V3 else "predio", "Campus da Farvalle no Valle Shopping", pos="center 55%")}</div>
     <div class="campus-txt">
       {secao_titulo("Campus Valle Shopping", "No coração de Amargosa", acento="e do Recôncavo Baiano.")}
       <p>Na Farvalle você encontra aulas 100% presenciais, em um campus bem localizado no Valle Shopping, com infraestrutura completa e um corpo docente qualificado que permite explorar o máximo do seu potencial.</p>

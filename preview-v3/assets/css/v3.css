@@ -1,0 +1,118 @@
+/* Farvalle 2 — v3: mistura do Farvalle 1 (layout aprovado 2026) com a v2 */
+:root{--areia:#fcf8f4;--creme:#fce8dc;--bege:#f8f4f0}
+/* Títulos em dois tons (verde + laranja em Montserrat), como no Farvalle 1 */
+.v3 .acento-sub{display:inline;font-family:var(--fonte);font-weight:800;color:var(--laranja);font-size:1em;line-height:inherit;margin:0 0 0 .25em;letter-spacing:-.01em}
+.v3 .sec-cab h2,.v3 .hero-int-txt h1{display:inline}
+.v3 .sec-cab h2+.acento-sub,.v3 .hero-int-txt h1+.acento-sub{font-size:clamp(1.6rem,1.15rem + 1.7vw,2.5rem)}
+.v3 .hero-int-txt h1+.acento-sub{font-size:clamp(2rem,1.3rem + 2.6vw,3.4rem)}
+.v3 .sec-cab p,.v3 .hero-int-txt .lead{margin-top:1rem}
+.v3 .sec-cab .eyebrow,.v3 .hero-int-txt .eyebrow{display:flex}
+.v3 .acento-hero{display:inline;font-size:clamp(2.1rem,1.2rem + 3.2vw,4rem);line-height:1.08}
+.v3 .hero-h{display:inline}
+.v3 .hero-txt .lead{margin-top:1.2rem}
+.v3 .hero-txt .eyebrow{display:flex}
+.v3 .cta-faixa .acento{color:var(--laranja)}
+.v3 .eyebrow{color:var(--verde-2)}
+/* Hero com fundo areia e lista de palavras à direita (Farvalle 1) */
+.v3 .hero{background:linear-gradient(180deg,var(--areia) 0%,#fff 100%)}
+.v3 .hero-slide{grid-template-columns:1fr 1.05fr auto;gap:2.5rem}
+.v3 .hero-palavras{display:flex;flex-direction:column;gap:.35rem;align-self:center;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--verde-2);padding-left:1.2rem;border-left:3px solid var(--laranja)}
+.v3 .hero-foto-box{padding:3% 3% 3% 6%}
+.v3 .hero-foto{clip-path:polygon(16% 0,100% 0,88% 100%,0 100%)}
+/* Cards de curso: texto à esquerda, foto à direita com corte diagonal (Farvalle 1) */
+.v3 .card-curso{flex-direction:row;align-items:stretch;min-height:230px;border-radius:var(--raio)}
+.v3 .card-curso-foto{aspect-ratio:auto;width:46%;flex:none;order:2;clip-path:polygon(18% 0,100% 0,100% 100%,0 100%)}
+.v3 .card-curso-foto .decor-card{width:36%;height:36%}
+.v3 .card-curso-foto .tag{left:auto;right:.8rem;top:.8rem}
+.v3 .card-curso-in{order:1;padding:1.4rem 0 1.4rem 1.4rem}
+.v3 .card-curso h3{font-size:1.25rem}
+.v3 .card-curso p{font-size:.9rem}
+.v3 .card-curso-meta{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}
+.v3 .card-curso-acoes{flex-wrap:wrap;gap:.6rem}
+.v3 .cursos-trilho>*{width:calc((100% - 1.25rem)/2)}
+/* "Por que": foto do campus com triângulos (Farvalle 1) */
+.v3 .porque-arte{position:relative;padding:5% 6% 5% 7%}
+.v3 .porque-arte .decor-foto{inset:-2% -3%;width:106%;height:104%}
+.v3 .porque-arte-foto{position:relative;z-index:1;aspect-ratio:4/3;overflow:hidden;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+.v3 .porque-arte-foto img{width:100%;height:100%;object-fit:cover}
+.v3 .porque-arte .porque-selo{position:absolute;right:0;bottom:-1rem;z-index:2;max-width:300px;box-shadow:var(--sombra-2)}
+/* Números: faixa verde escura com foto à direita (Farvalle 1) */
+.v3 .sec-numeros{background:var(--verde);color:#fff;padding:0}
+.v3 .sec-numeros>.wrap{display:grid;grid-template-columns:.95fr 2.3fr .75fr;gap:1.5rem;align-items:center;min-height:300px}
+.v3 .sec-numeros .sec-cab h2,.v3 .sec-numeros .sec-cab h2+.acento-sub{font-size:1.55rem}
+.v3 .sec-numeros .sec-cab{margin:2.5rem 0}
+.v3 .sec-numeros h2,.v3 .sec-numeros .eyebrow{color:#fff}
+.v3 .sec-numeros .acento-sub{color:#9fd4b4}
+.v3 .sec-numeros .decor-band{opacity:.6}
+.v3 .numeros{padding:2rem 0}
+.v3 .numeros>*{width:calc((100% - 3*1.25rem)/4)}
+.v3 .numero{background:transparent;border:0;border-left:1px solid rgba(255,255,255,.2);border-radius:0;padding:.4rem 1rem;min-height:0;gap:.35rem}
+.v3 .numero .ic-circ{background:rgba(255,255,255,.12);color:#fff;width:44px;height:44px}
+.v3 .numero strong{color:#fff;font-size:2rem}
+.v3 .numero span{color:rgba(255,255,255,.8);font-size:.8rem;line-height:1.35}
+.v3 .sec-numeros .trilho-nav{display:none!important}
+.v3 .numeros-foto{align-self:stretch;position:relative;min-height:300px;order:3}
+.v3 .numeros-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:polygon(22% 0,100% 0,100% 100%,0 100%)}
+/* Formas de ingresso e serviços em tom areia (Farvalle 1 usava fundos claros) */
+.v3 .sec-ingresso{background:var(--bege)}
+.v3 .sec-servicos{background:var(--areia);color:var(--texto)}
+.v3 .sec-servicos h2{color:var(--verde)}
+.v3 .sec-servicos .eyebrow{color:var(--verde-2)}
+.v3 .sec-servicos .decor-band{opacity:.12}
+.v3 .servico{background:#fff;border:1px solid var(--borda);color:var(--texto);box-shadow:var(--sombra-sm)}
+.v3 .servico:hover{background:#fff;box-shadow:var(--sombra-2)}
+.v3 .servico h3{color:var(--verde)}
+.v3 .servico p{color:var(--cinza)}
+.v3 .servico .ic-circ-claro{background:var(--verde-claro);color:var(--verde-2)}
+.v3 .servico .link-mais-claro{color:var(--verde-2)}
+.v3 .sec-servicos .trilho-nav button{background:#fff;border-color:var(--verde-linha);color:var(--verde-2)}
+.v3 .sec-servicos .trilho-barra{background:var(--verde-claro)}
+.v3 .sec-servicos .trilho-barra i{background:var(--verde-2)}
+/* Notícias: data em laranja (Farvalle 1) */
+.v3 .card-not-meta time{color:var(--laranja);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem}
+/* Chamada final em tom areia com texto verde (Farvalle 1) */
+.v3 .cta-faixa{background:linear-gradient(180deg,var(--creme) 0%,var(--areia) 100%);color:var(--texto)}
+.v3 .cta-faixa h2{color:var(--verde)}
+.v3 .cta-faixa p{color:var(--cinza)}
+.v3 .cta-faixa .eyebrow-claro{color:var(--verde-2)}
+.v3 .cta-faixa .lista-check-claro .ic{color:var(--laranja)}
+.v3 .cta-faixa .btn-claro{background:#fff;color:var(--verde-2);border-color:var(--verde-linha)}
+.v3 .cta-faixa .btn-claro:hover{border-color:var(--verde-2);color:var(--verde)}
+.v3 .cta-faixa .decor-band{opacity:.9}
+.v3 .cta-faixa-foto{clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);border-radius:0;box-shadow:none}
+/* Rodapé com Portal/Inscreva-se e QR do e-MEC (Farvalle 1) */
+.v3 .rodape-grade{grid-template-columns:1.3fr .9fr .9fr 1.2fr 1fr}
+.v3 .rodape-acoes{display:flex;flex-direction:column;gap:.7rem;align-items:stretch}
+.v3 .rodape-acoes .btn{width:100%}
+.v3 .rodape-qr{display:flex;gap:.8rem;align-items:center;margin-top:.6rem;background:#fff;border-radius:var(--raio);padding:.6rem;color:var(--texto);font-size:.72rem;line-height:1.3}
+.v3 .rodape-qr>img{width:64px;height:64px;flex:none}
+.v3 .rodape-qr span img{height:22px;width:auto;margin-bottom:.3rem}
+.v3 .rodape-qr:hover{color:var(--verde)}
+@media (max-width:1100px){
+  .v3 .rodape-grade{grid-template-columns:1fr 1fr}
+  .v3 .sec-numeros>.wrap{grid-template-columns:1fr 1.6fr}
+  .v3 .numeros-foto{display:none}
+  .v3 .numeros>*{width:calc((100% - 1.25rem)/2)}
+}
+@media (max-width:960px){
+  .v3 .porque-arte .decor-foto,.v3 .hero-foto-box .decor-foto{inset:0;width:100%;height:100%}
+  .v3 .hero-slide{grid-template-columns:1fr}
+  .v3 .hero-palavras{display:none}
+  .v3 .sec-numeros>.wrap{grid-template-columns:1fr;min-height:0;padding:1rem 0}
+  .v3 .sec-numeros .sec-cab{margin:1.5rem 0 0}
+  .v3 .numeros{padding:.5rem 0 1.5rem}
+  .v3 .porque-arte .porque-selo{position:static;max-width:none;margin-top:1rem}
+  .v3 .cursos-trilho>*{width:calc((100% - 1.25rem)/2)}
+}
+@media (max-width:640px){
+  .v3 .acento-sub,.v3 .sec-cab h2,.v3 .hero-h,.v3 .hero-int-txt h1{display:block}
+  .v3 .acento-sub{margin:.1em 0 .3em}
+  .v3 .card-curso{flex-direction:column;min-height:0}
+  .v3 .card-curso-foto{width:100%;aspect-ratio:4/3;order:0;clip-path:none}
+  .v3 .card-curso-in{padding:1.3rem 1.4rem 1.4rem}
+  .v3 .numeros>*{width:70%!important}
+  .v3 .numero{border-left:0;border-top:1px solid rgba(255,255,255,.2)}
+  .v3 .rodape-grade{grid-template-columns:1fr}
+  .v3 .rodape-acoes{align-items:center}
+  .v3 .rodape-qr{text-align:left}
+}

@@ -3,6 +3,7 @@ a-farvalle.html
 assets/css/leaflet.css
 assets/css/site.css
 assets/css/v2.css
+assets/css/v3.css
 assets/fonts/caveat-latin-600-normal.woff2
 assets/fonts/montserrat-latin-400-normal.woff2
 assets/fonts/montserrat-latin-500-normal.woff2
@@ -32,6 +33,7 @@ assets/img/news-2.jpg
 assets/img/news-3.jpg
 assets/img/og.jpg
 assets/img/predio.jpg
+assets/img/qr-code-farvalle.svg
 assets/js/LICENSE-leaflet.txt
 assets/js/leaflet.js
 assets/js/site.js
