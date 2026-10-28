@@ -1,0 +1,32 @@
+/* Farvalle 2 — v2: formas geométricas da identidade (triângulos verde/laranja/creme) */
+.decor{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.v2 .hero,.v2 .hero-int,.v2 .sec-numeros,.v2 .sec-servicos,.v2 .cta-faixa,.v2 .pg-404,.v2 .sec-form,.v2 .sec-valores,.v2 .rodape,.v2 .ficha{position:relative;overflow:hidden}
+.v2 .hero>.wrap,.v2 .hero-int>.wrap,.v2 .sec-numeros>.wrap,.v2 .sec-servicos>.wrap,.v2 .cta-faixa>.wrap,.v2 .pg-404>.wrap,.v2 .sec-form>.wrap,.v2 .sec-valores>.wrap,.v2 .rodape>.wrap,.v2 .ficha>.wrap{position:relative;z-index:1}
+/* suaviza os motivos de fundo nas seções claras */
+.v2 .decor-soft{opacity:.9}
+.v2 .sec-servicos .decor-band,.v2 .cta-faixa .decor-band,.v2 .ficha .decor-band{opacity:.55}
+.v2 .rodape .decor-rodape{opacity:.35}
+.v2 .hero::before,.v2 .hero-int::before{display:none}
+/* fotos com corte diagonal e triângulos atrás (como nas artes aprovadas) */
+.v2 .hero-foto-box,.v2 .hero-int-foto-box{position:relative;padding:4% 4% 4% 7%}
+.v2 .hero-foto-box .decor-foto,.v2 .hero-int-foto-box .decor-foto{inset:-2% -3%;width:106%;height:104%;z-index:0}
+.v2 .hero-foto,.v2 .hero-int-foto{position:relative;z-index:1;border-radius:0;box-shadow:none;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+.v2 .hero-int-foto{clip-path:polygon(0 0,100% 0,100% 100%,14% 100%)}
+.v2 .hero-foto::after,.v2 .hero-int-forma{display:none}
+/* triângulo translúcido sobre o canto da foto (acabamento das artes) */
+.v2 .hero-foto::before,.v2 .hero-int-foto::before{content:"";position:absolute;left:0;top:0;width:38%;height:48%;background:rgba(226,87,43,.55);clip-path:polygon(0 0,100% 0,0 100%);z-index:2;pointer-events:none}
+.v2 .hero-int-foto::before{left:auto;right:0;top:auto;bottom:0;background:rgba(46,74,58,.55);clip-path:polygon(100% 0,100% 100%,0 100%)}
+/* cartões de curso: motivo no canto da foto */
+.v2 .card-curso-foto{position:relative}
+.v2 .card-curso-foto .decor-card{inset:auto;left:0;top:0;width:30%;height:30%;z-index:1}
+.v2 .card-curso-foto .tag{z-index:2;left:auto;right:1rem}
+/* fileira de números e serviços: cards ganham canto cortado */
+.v2 .numero,.v2 .servico,.v2 .ingresso,.v2 .entrada{clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%)}
+/* botões laranja ganham o chanfro da marca */
+.v2 .btn-laranja{border-radius:999px 10px 999px 10px}
+@media (max-width:960px){
+  .v2 .hero-foto-box,.v2 .hero-int-foto-box{padding:5% 4% 5% 6%}
+}
+@media (max-width:640px){
+  .v2 .hero-foto::before{width:34%;height:40%}
+}

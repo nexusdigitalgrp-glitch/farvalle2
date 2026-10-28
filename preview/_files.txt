@@ -2,6 +2,7 @@
 a-farvalle.html
 assets/css/leaflet.css
 assets/css/site.css
+assets/css/v2.css
 assets/fonts/caveat-latin-600-normal.woff2
 assets/fonts/montserrat-latin-400-normal.woff2
 assets/fonts/montserrat-latin-500-normal.woff2

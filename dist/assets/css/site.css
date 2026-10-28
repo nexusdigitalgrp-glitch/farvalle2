@@ -198,7 +198,7 @@ p{margin:0 0 1rem}
 .card-curso{background:#fff;border:1px solid var(--borda);border-radius:var(--raio-g);overflow:hidden;box-shadow:var(--sombra);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
 .card-curso:hover{transform:translateY(-4px);box-shadow:var(--sombra-2)}
 .card-curso-foto{position:relative;aspect-ratio:4/3;display:block}
-.card-curso-foto img{width:100%;height:100%;object-fit:cover}
+.card-curso-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .card-curso-foto .tag{position:absolute;left:1rem;top:1rem}
 .card-curso-in{padding:1.3rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:.7rem;flex:1}
 .card-curso h3{font-size:1.35rem}
@@ -210,7 +210,8 @@ p{margin:0 0 1rem}
 .card-curso-acoes{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-top:auto;padding-top:.5rem}
 
 /* Por que a Farvalle */
-.porque-in>*,.campus-in>*,.dupla>*,.hero-int-in>*,.local-in>*,.form-grade>*,.cta-faixa-in>*{min-width:0}
+.porque-in>*,.campus-in>*,.dupla>*,.hero-int-in>*,.local-in>*,.form-grade>*,.cta-faixa-in>*,.hero-slide>*{min-width:0}
+.hero-foto-box,.hero-int-foto-box{position:relative}
 .porque-in{display:grid;grid-template-columns:1.1fr 1fr;gap:3.5rem;align-items:center}
 .porque-txt>p{color:var(--cinza)}
 .porque-lista{display:grid;gap:1rem;margin-top:1.4rem}
@@ -556,11 +557,13 @@ p{margin:0 0 1rem}
   .m-acoes .btn{width:100%}
   .m-rodape{margin-top:1.4rem;font-size:.85rem;color:var(--cinza);display:flex;gap:.4rem;align-items:flex-start}
   .hero-slide{grid-template-columns:1fr;gap:1.5rem;padding:1.5rem 0 4.5rem}
-  .hero-foto{aspect-ratio:16/10;order:-1}
+  .hero-foto-box{order:-1}
+  .hero-foto{aspect-ratio:16/10}
   .hero-h{font-size:clamp(1.9rem,1.1rem + 3.4vw,2.8rem)}
   .porque-in,.campus-in,.cta-faixa-in,.dupla,.hero-int-in,.local-in,.historia-in{grid-template-columns:1fr}
   .dupla-inv .dupla-foto{order:-1}
-  .hero-int-foto{order:-1;aspect-ratio:16/9}
+  .hero-int-foto-box{order:-1}
+  .hero-int-foto{aspect-ratio:16/9}
   .historia-card{position:static}
   .porque-fotos{max-width:520px}
   .missao-grade,.formas-grade,.pub-grade{grid-template-columns:1fr}

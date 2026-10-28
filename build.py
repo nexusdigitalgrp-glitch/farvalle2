@@ -9,6 +9,7 @@ RAIZ = pathlib.Path(__file__).parent
 SRC = RAIZ / "src"
 DIST = RAIZ / "dist"
 LIMPO = "--limpo" in sys.argv
+V2 = "--v2" in sys.argv  # versão 2: formas geométricas da identidade (triângulos verde/laranja/creme)
 BASE = next((a.split("=", 1)[1].rstrip("/") for a in sys.argv if a.startswith("--base=")), "")
 SITE = next((a.split("=", 1)[1].rstrip("/") for a in sys.argv if a.startswith("--site=")), "https://farvalle.edu.br")
 
@@ -207,6 +208,25 @@ I = {
 }
 
 
+DECOR = {
+    # motivo gráfico da identidade (mesmos polígonos do layout aprovado 2026)
+    "hero": ('0 0 1200 560', '<polygon points="0,0 150,0 75,120" fill="#efe4dc"/><polygon points="0,560 190,560 95,400" fill="#efe4dc"/><polygon points="520,0 760,0 640,210" fill="#2e4a3a"/><polygon points="760,0 930,0 845,150" fill="#e2572b"/><polygon points="640,210 845,150 760,360" fill="#3b5d4a" opacity=".85"/><polygon points="1200,560 980,560 1090,380" fill="#e2572b"/><polygon points="1200,320 1200,560 1090,380" fill="#2e4a3a" opacity=".9"/><polygon points="560,560 700,560 630,440" fill="#efe4dc"/>'),
+    "band": ('0 0 1200 320', '<polygon points="0,0 220,0 110,160" fill="#3b5d4a"/><polygon points="0,320 180,320 90,170" fill="#3b5d4a" opacity=".7"/><polygon points="1200,0 980,0 1090,180" fill="#e2572b"/><polygon points="1200,320 1010,320 1105,170" fill="#3b5d4a" opacity=".8"/><polygon points="880,0 1000,0 940,90" fill="#f6f0ea" opacity=".18"/>'),
+    "corner": ('0 0 400 300', '<polygon points="400,0 200,0 300,160" fill="#e2572b"/><polygon points="400,160 300,160 400,300" fill="#2e4a3a" opacity=".9"/><polygon points="120,0 220,0 170,80" fill="#efe4dc"/>'),
+    "soft": ('0 0 1200 500', '<polygon points="0,0 140,0 70,110" fill="#efe4dc"/><polygon points="0,500 160,500 80,360" fill="#efe4dc"/><polygon points="1200,500 1040,500 1120,370" fill="#efe4dc"/><polygon points="1200,0 1080,0 1140,90" fill="#fbe7dd"/>'),
+    "foto": ('0 0 600 480', '<polygon points="0,0 230,0 115,200" fill="#2e4a3a"/><polygon points="230,0 400,0 315,150" fill="#e2572b"/><polygon points="115,200 315,150 230,340" fill="#3b5d4a" opacity=".85"/><polygon points="600,480 380,480 490,300" fill="#e2572b"/><polygon points="600,240 600,480 490,300" fill="#2e4a3a" opacity=".9"/><polygon points="0,480 150,480 75,350" fill="#efe4dc"/>'),
+    "tri": ('0 0 200 200', '<polygon points="0,0 120,0 60,100" fill="#2e4a3a" opacity=".92"/><polygon points="120,0 200,0 160,70" fill="#e2572b" opacity=".92"/><polygon points="0,0 0,120 60,100" fill="#efe4dc" opacity=".9"/>'),
+}
+
+
+def decor(variante, classe="", slice_="xMidYMid slice"):
+    """Formas geométricas (só na v2). Decorativas: ficam atrás/sobre o conteúdo sem capturar cliques."""
+    if not V2:
+        return ""
+    vb, polys = DECOR[variante]
+    return f'<svg class="decor decor-{variante} {classe}" viewBox="{vb}" preserveAspectRatio="{slice_}" aria-hidden="true" focusable="false">{polys}</svg>'
+
+
 def ic(nome, classe="ic"):
     return f'<span class="{classe}" aria-hidden="true">{I[nome]}</span>'
 
@@ -301,7 +321,7 @@ def rodape():
             ("Vida Acadêmica", "publicacoes-institucionais"), ("Notícias", "noticias"), ("Contato", "contato"), ("Política de Privacidade", "privacidade")]
     inst_li = "".join(f'<li><a href="{url(s)}">{e(r)}</a></li>' for r, s in inst)
     js_v = versao_asset("assets/js/site.js")
-    return f'''<footer class="rodape">
+    return f'''<footer class="rodape">{decor("band", "decor-rodape")}
   <div class="rodape-cta wrap">
     <div>
       <strong>Pronto para começar?</strong>
@@ -407,9 +427,10 @@ def pagina(slug, titulo, descricao, corpo, og="assets/img/og.jpg", mapa=False):
 <link rel="preload" href="assets/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 {'<link rel="stylesheet" href="assets/css/leaflet.css">' if mapa else ""}
 <link rel="stylesheet" href="assets/css/site.css?v={css_v}">
+{f'<link rel="stylesheet" href="assets/css/v2.css?v={versao_asset("assets/css/v2.css")}">' if V2 else ""}
 {schema(slug, titulo, descricao)}
 </head>
-<body>
+<body{' class="v2"' if V2 else ''}>
 {cabecalho(slug)}
 <main id="conteudo">
 {corpo}
@@ -449,7 +470,7 @@ def trilha(itens):
 
 def hero_interno(eyebrow, titulo, lead, foto_nome, alt, crumbs, botoes="", pos=None, acento=None):
     ac = f'<span class="acento acento-sub">{e(acento)}</span>' if acento else ""
-    return f'''<section class="hero-int">
+    return f'''<section class="hero-int">{decor("soft")}
   <div class="wrap hero-int-in">
     <div class="hero-int-txt">
       {trilha(crumbs)}
@@ -458,14 +479,14 @@ def hero_interno(eyebrow, titulo, lead, foto_nome, alt, crumbs, botoes="", pos=N
       <p class="lead">{e(lead)}</p>
       <div class="btns">{botoes}</div>
     </div>
-    <div class="hero-int-foto">{foto(foto_nome, alt, prioridade=True, pos=pos)}<span class="hero-int-forma" aria-hidden="true"></span></div>
+    <div class="hero-int-foto-box">{decor("foto")}<div class="hero-int-foto">{foto(foto_nome, alt, prioridade=True, pos=pos)}<span class="hero-int-forma" aria-hidden="true"></span></div></div>
   </div>
 </section>'''
 
 
 def card_curso(c, compacto=False):
     return f'''<article class="card-curso">
-  <a class="card-curso-foto" href="{url('cursos/' + c['slug'])}" aria-label="{e(c['nome'])}">{foto('curso-' + c['slug'], f"Curso de {c['nome']} na Farvalle", pos="center 30%")}<span class="tag">{e(c['grau'])}</span></a>
+  <a class="card-curso-foto" href="{url('cursos/' + c['slug'])}" aria-label="{e(c['nome'])}">{foto('curso-' + c['slug'], f"Curso de {c['nome']} na Farvalle", pos="center 30%")}{decor("tri", "decor-card", "xMinYMin meet")}<span class="tag">{e(c['grau'])}</span></a>
   <div class="card-curso-in">
     <h3><a href="{url('cursos/' + c['slug'])}">{e(c['nome'])}</a></h3>
     <p>{e(c['tagline'])}</p>
@@ -476,7 +497,7 @@ def card_curso(c, compacto=False):
 
 
 def cta_faixa(titulo="Seu futuro começa aqui.", texto="Dê o próximo passo com uma formação que transforma realidades e abre novos caminhos. Inscrições abertas para Enfermagem, Fisioterapia e Pedagogia.", foto_nome="cta"):
-    return f'''<section class="cta-faixa">
+    return f'''<section class="cta-faixa">{decor("band")}
   <div class="wrap cta-faixa-in">
     <div class="cta-faixa-foto">{foto(foto_nome, "Estudante da Farvalle", pos="center 25%")}</div>
     <div class="cta-faixa-txt">
@@ -535,10 +556,10 @@ def home():
         <p class="lead">{e(s["txt"])}</p>
         <div class="btns">{btn(s["b1"][0], url(s["b1"][1]), "btn btn-laranja", grande=True)}{btn(s["b2"][0], url(s["b2"][1]), "btn btn-contorno", grande=True)}</div>
       </div>
-      <div class="hero-foto">{foto(s["foto"], s["alt"], prioridade=(i == 0), pos=s["pos"])}</div>
+      <div class="hero-foto-box">{decor("foto")}<div class="hero-foto">{foto(s["foto"], s["alt"], prioridade=(i == 0), pos=s["pos"])}</div></div>
     </div>'''
     pontos = "".join(f'<button type="button" aria-label="Destaque {i+1}"{" aria-current=\"true\"" if i == 0 else ""}></button>' for i in range(len(slides)))
-    hero = f'''<section class="hero" data-hero>
+    hero = f'''<section class="hero" data-hero>{decor("soft")}
   <div class="wrap hero-in">{sl}
     <div class="hero-ctl"><button type="button" class="hero-seta" data-hero-ant aria-label="Destaque anterior">{I["chev-r"]}</button><div class="hero-pontos">{pontos}</div><button type="button" class="hero-seta" data-hero-prox aria-label="Próximo destaque">{I["chev-r"]}</button></div>
   </div>
@@ -585,7 +606,7 @@ def home():
   </div>
 </section>'''
 
-    numeros = f'''<section class="sec sec-numeros">
+    numeros = f'''<section class="sec sec-numeros">{decor("soft")}
   <div class="wrap">
     {secao_titulo("Farvalle em números", "Mais pessoas, mais histórias,", acento="mais futuro.", centro=True)}
     <div class="numeros" data-trilho>
@@ -620,7 +641,7 @@ def home():
         ("chat", "Secretaria Acadêmica", "Atendimento ao candidato e ao aluno, presencial e pelo WhatsApp.", "contato", False),
     ]
     serv = "".join(f'<a class="servico" href="{url(h)}"{" target=\"_blank\" rel=\"noopener\"" if ext else ""}>{ic(i, "ic-circ ic-circ-claro")}<h3>{e(t)}</h3><p>{e(d)}</p><span class="link-mais link-mais-claro">Acessar {I["arrow"]}</span></a>' for i, t, d, h, ext in servicos)
-    servicos_html = f'''<section class="sec sec-servicos">
+    servicos_html = f'''<section class="sec sec-servicos">{decor("band")}
   <div class="wrap">
     {secao_titulo("Serviços e acesso", "Tudo o que o estudante precisa,", acento="em um só lugar.", centro=True)}
     <div class="servicos-grade" data-trilho>{serv}</div>{trilho_nav()}
@@ -696,7 +717,7 @@ def a_farvalle():
     </aside>
   </div>
 </section>
-<section class="sec sec-valores" id="valores">
+<section class="sec sec-valores" id="valores">{decor("soft")}
   <div class="wrap">
     {secao_titulo("Por que escolher a Farvalle", "Educação que gera oportunidades", acento="para a nossa gente e para o território.", centro=True)}
     <div class="valores-grade" data-trilho>{val}</div>{trilho_nav()}
@@ -752,7 +773,7 @@ def curso_pg(c):
     corpo = hero_interno(f"{c['grau']} · {c['modalidade']}", c["nome"], c["resumo"], "curso-" + c["slug"] + "-hero", f"Estudante de {c['nome']} da Farvalle",
                          [("Início", "index"), ("Cursos", "cursos"), (c["nome"], None)],
                          btn("Inscreva-se", url("inscreva-se") + "?curso=" + c["slug"], "btn btn-laranja") + btn_whats("Tirar dúvidas"), pos="center 30%", acento=c["tagline"])
-    corpo += f'''<section class="ficha">
+    corpo += f'''<section class="ficha">{decor("band")}
   <div class="wrap ficha-grade" data-trilho>
     <div class="ficha-item">{ic("grad","ic-circ")}<span>Grau</span><strong>{e(c["grau"])}</strong></div>
     <div class="ficha-item">{ic("clock","ic-circ")}<span>Duração</span><strong>{e(c["duracao"])}</strong></div>
@@ -849,7 +870,7 @@ def inscreva_se_pg():
     op = lambda xs: "".join(f'<option value="{e(x)}">{e(x)}</option>' for x in xs)
     corpo = hero_interno("Inscrição online", "Inscreva-se no " + EDICAO, "Preencha os dados abaixo. Se escolher o Vestibular Online, escreva a sua redação no próprio formulário. A secretaria acadêmica entra em contato em seguida.",
                          "cta", "Candidata fazendo a inscrição online", [("Início", "index"), ("Processo Seletivo", "processo-seletivo"), ("Inscreva-se", None)], "", pos="center 20%", acento="e comece hoje.")
-    corpo += f'''<section class="sec sec-form">
+    corpo += f'''<section class="sec sec-form">{decor("soft")}
   <div class="wrap form-grade">
     <form class="form" id="form-inscricao" novalidate data-destino="{EMAIL_SECRETARIA}">
       <h2 class="form-h">Dados do candidato</h2>
@@ -1034,7 +1055,7 @@ def privacidade_pg():
 
 
 def pagina_404():
-    return f'''<section class="sec pg-404">
+    return f'''<section class="sec pg-404">{decor("soft")}
   <div class="wrap pg-404-in">
     <span class="pg-404-n">404</span>
     <h1>Página não encontrada</h1>
